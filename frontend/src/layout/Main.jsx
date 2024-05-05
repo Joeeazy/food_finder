@@ -1,10 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function Main() {
   return (
-    <div>
-      <nav>Nav Bar</nav>
+    <div className="bg-primaryBG">
+      <Navbar />
       <Outlet />
       <footer>Footer</footer>
     </div>
