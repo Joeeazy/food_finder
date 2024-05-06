@@ -1,7 +1,26 @@
 import logo from "/logo.png";
 import { MdOutlineAddIcCall } from "react-icons/md";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Navbar() {
+  const [isSticky, setIsSticky] = useState(false);
+
+  //handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 0) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.addEventListener("scroll", handleScroll);
+    };
+  }, []);
   const navItems = (
     <>
       <li>
@@ -45,8 +64,14 @@ export default function Navbar() {
     </>
   );
   return (
-    <header className="max-w-screen-2xl container mx-auto bg-primaryBG text-black">
-      <div className="navbar xl:px-24">
+    <header className="max-w-screen-2xl container mx-auto text-black fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out">
+      <div
+        className={`navbar xl:px-24 ${
+          isSticky
+            ? "shadow-md bg-gradient-to-down from-slate-200 to-slate-400 transition-all duration-300 ease-in-out"
+            : "bg-white"
+        }`}
+      >
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
