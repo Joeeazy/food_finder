@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Banner() {
   return (
-    <div className="section-container bg-gradient-to-r from-[#FAFAFA] from-0% to-[#FCFCFC] to-100% z-0">
+    <div className="section-container bg-gradient-to-r from-[#FAFAFA] from-0% to-[#FCFCFC] to-100%">
       <div className="py-24 flex flex-col md:flex-row-reverse justify-between items-center gap-8">
         {/* right side */}
         <div className="md:w-1/2">
@@ -22,22 +22,26 @@ export default function Banner() {
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
                     checked
+                    readOnly
                   />
                   <input
                     type="radio"
@@ -61,27 +65,32 @@ export default function Banner() {
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
                     checked
+                    readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
                     className="mask mask-star-2 bg-orange-600"
+                    readOnly
                   />
                 </div>
                 <p className="text-red">ksh 300.00</p>
@@ -90,8 +99,8 @@ export default function Banner() {
           </div>
         </div>
         {/* left side */}
-        <div className="md:w-1/2 space-y-7 px-4">
-          <h2 className="md:text-5xl text-4xl font-bold leading-snug md:leading-snug  text-black">
+        <div className="md:w-1/2 px-4 space-y-7">
+          <h2 className="md:text-5xl text-4xl font-bold leading-snug md:leading-snug text-black">
             Dive Into Delights of Delectable{" "}
             <span className="text-green">Food</span>
           </h2>

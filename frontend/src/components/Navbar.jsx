@@ -64,12 +64,14 @@ export default function Navbar() {
     </>
   );
   return (
-    <header className="max-w-screen-2xl container mx-auto text-black fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out">
+    <header
+      className={`max-w-screen-2xl container mx-auto fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out`}
+    >
       <div
         className={`navbar xl:px-24 ${
           isSticky
-            ? "shadow-md bg-gradient-to-down from-slate-200 to-slate-400 transition-all duration-300 ease-in-out"
-            : "bg-white"
+            ? "shadow-md shadow-emerald-100 bg-white transition-all duration-300 ease-in-out"
+            : ""
         }`}
       >
         <div className="navbar-start">
@@ -100,11 +102,11 @@ export default function Navbar() {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navItems}</ul>
+          <ul className="menu menu-horizontal px-1 text-black">{navItems}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end ">
           {/* search icon */}
-          <button className="btn btn-ghost btn-circle hidden lg:flex">
+          <button className="btn btn-ghost btn-circle hidden lg:flex text-black">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -124,7 +126,7 @@ export default function Navbar() {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle mr-3 flex items-center justify-center"
+            className="btn btn-ghost btn-circle mr-3 flex items-center justify-center text-black "
           >
             <div className="indicator hidden lg:flex">
               <svg

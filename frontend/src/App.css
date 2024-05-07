@@ -1,7 +1,15 @@
 body {
   font-family: "inter", "sans-serif";
 }
-
+header {
+  z-index: 10001 !important;
+}
 .section-container {
   @apply max-w-screen-2xl container mx-auto xl:px-24 px-4;
+}
+.subtitle {
+  @apply text-rose-700 uppercase tracking-wide font-semibold text-lg;
+}
+.title {
+  @apply text-4xl md:text-5xl font-bold my-2 md:leading-snug leading-snug text-black;
 }
