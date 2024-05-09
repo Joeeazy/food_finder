@@ -7,6 +7,7 @@ import Cards from "../../components/Cards";
 
 export default function SpecialDishes() {
   const [recipes, setRecipes] = useState([]);
+
   const slider = React.useRef(null);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function SpecialDishes() {
     ],
   };
   return (
-    <div className="section-container mt-0 h-[720px] bg-white ">
+    <div className="section-container h-[720px] bg-white py-10 mt-30">
       <div className="text-left">
         <p className="subtitle">Special Dishes</p>
         <h2 className="title md:w-[520px]">

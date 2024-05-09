@@ -5,7 +5,7 @@ import SpecialDishes from "./SpecialDishes";
 
 export default function Home() {
   return (
-    <div className="h-screen bg-white bg-cover">
+    <div>
       <Banner />
       <Categories />
       <SpecialDishes />

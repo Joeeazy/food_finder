@@ -29,13 +29,13 @@ const categoryItems = [
 
 export default function Categories() {
   return (
-    <div className="section-container  py-16 bg-white h-[550px] pb-10">
+    <div className="section-container py-16 bg-white">
       <div className="text-center">
         <p className="subtitle">Customer Favourites</p>
         <h2 className="title">Popular Categories</h2>
       </div>
       {/* category cards */}
-      <div className="flex flex-col sm:flex-row flex-wrap gap-8 justify-around items-center mt-12">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-8 justify-around items-center mt-12 ">
         {categoryItems.map((item, i) => (
           <div
             key={i}
