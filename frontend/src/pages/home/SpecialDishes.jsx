@@ -4,7 +4,32 @@ import Slider from "react-slick";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import Cards from "../../components/Cards";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
+const simpleNextArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "red" }}
+      onClick={onClick}
+    >
+      Next
+    </div>
+  );
+};
+const simplePrevArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "green" }}
+      onClick={onClick}
+    >
+      Back
+    </div>
+  );
+};
 export default function SpecialDishes() {
   const [recipes, setRecipes] = useState([]);
 
@@ -25,15 +50,15 @@ export default function SpecialDishes() {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     initialSlide: 0,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
           infinite: true,
           dots: true,
         },
@@ -41,9 +66,9 @@ export default function SpecialDishes() {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
         },
       },
       {
@@ -54,9 +79,12 @@ export default function SpecialDishes() {
         },
       },
     ],
+
+    nextArrow: <simpleNextArrow />,
+    prevArrow: <simplePrevArrow />,
   };
   return (
-    <div className="section-container h-[720px] bg-white py-10 mt-30">
+    <div className="section-container h-[720px] bg-slate-50 py-13 mt-0 relative">
       <div className="text-left">
         <p className="subtitle">Special Dishes</p>
         <h2 className="title md:w-[520px]">
@@ -65,7 +93,26 @@ export default function SpecialDishes() {
             Our Menu
           </span>
         </h2>
-        <Slider {...settings}>
+        {/* arrow buttons */}
+        <div className="md:absolute right-12 top-12 mb-10 md:mr-24">
+          <button
+            onClick={() => slider?.current?.slickPrev()}
+            className="btn p-2 rounded-full ml-5 bg-slate-500 text-white"
+          >
+            <FaAngleLeft className="w-8 h-8 p-1" />
+          </button>
+          <button
+            onClick={() => slider?.current?.slickNext()}
+            className="button p-2 rounded-full ml-5 bg-green text-white"
+          >
+            <FaAngleRight className="w-8 h-8 p-1" />
+          </button>
+        </div>
+        <Slider
+          ref={slider}
+          {...settings}
+          className="overflow-hidden mt-10 space-x-5"
+        >
           {recipes.map((item, id) => (
             <Cards key={id} item={item} />
           ))}

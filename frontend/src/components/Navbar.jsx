@@ -70,7 +70,7 @@ export default function Navbar() {
       <div
         className={`navbar xl:px-24 ${
           isSticky
-            ? "shadow-md shadow-emerald-100 bg-white transition-all duration-300 ease-in-out"
+            ? "shadow-md shadow-emerald-100 bg-slate-50 transition-all duration-300 ease-in-out"
             : ""
         }`}
       >
@@ -146,7 +146,7 @@ export default function Navbar() {
               <span className="badge badge-sm indicator-item">8</span>
             </div>
           </div>
-          <a className="btn bg-green rounded-full px-6 text-white flex items-center gap-2">
+          <a className="button bg-green rounded-full px-8 py-3  text-white flex items-center gap-2">
             <MdOutlineAddIcCall /> Contact
           </a>
         </div>
