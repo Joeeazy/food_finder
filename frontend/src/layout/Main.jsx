@@ -2,13 +2,14 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../App.css";
-import SpecialDishes from "../pages/home/SpecialDishes";
+import Footer from "../components/Footer";
 
 export default function Main() {
   return (
-    <div className="bg-primaryBG">
+    <div>
       <Navbar />
       <Outlet />
+      <Footer />
     </div>
   );
 }

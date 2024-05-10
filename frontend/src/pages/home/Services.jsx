@@ -27,7 +27,7 @@ const serviceLists = [
 
 export default function Services() {
   return (
-    <div className="section-container bg-slate-50">
+    <div className="section-container bg-slate-50 mt-40 ">
       <div className="flex flex-col md:flex-row items-center justify-between gap-12">
         {/* text */}
         <div className="md:w-1/2">
