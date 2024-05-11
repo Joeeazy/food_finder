@@ -19,3 +19,8 @@ header {
 .placeholder-white::placeholder {
   color: white;
 }
+.active {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  color: #39db4a;
+}

@@ -24,14 +24,16 @@ export default function Navbar() {
   const navItems = (
     <>
       <li>
-        <a href="/">Home</a>
+        <a className="text-green" href="/">
+          Home
+        </a>
       </li>
       <li>
         <details>
           <summary>Menu</summary>
-          <ul className="p-2 bg-green">
+          <ul className="p-2 bg-slate-50">
             <li>
-              <a>All</a>
+              <a href="/menu">All</a>
             </li>
             <li>
               <a>Salad</a>
@@ -45,7 +47,7 @@ export default function Navbar() {
       <li>
         <details>
           <summary>Services</summary>
-          <ul className="p-2 bg-green">
+          <ul className="p-2 bg-slate-50">
             <li>
               <a>Online Booking</a>
             </li>
