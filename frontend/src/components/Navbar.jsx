@@ -1,7 +1,8 @@
 import logo from "/logo.png";
-import { MdOutlineAddIcCall } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
 import { useState } from "react";
 import { useEffect } from "react";
+import Modal from "./Modal";
 
 export default function Navbar() {
   const [isSticky, setIsSticky] = useState(false);
@@ -148,9 +149,15 @@ export default function Navbar() {
               <span className="badge badge-sm indicator-item">8</span>
             </div>
           </div>
-          <a className="button bg-green rounded-full px-8 py-3  text-white flex items-center gap-2">
-            <MdOutlineAddIcCall /> Contact
-          </a>
+          {/* Login dialog */}
+          <button
+            className="button bg-green rounded-full px-8 py-3  text-white flex items-center gap-2"
+            onClick={() => document.getElementById("my_modal_5").showModal()}
+          >
+            <FaUser /> Login
+          </button>
+
+          <Modal />
         </div>
       </div>
     </header>
