@@ -3,9 +3,15 @@ import { FaUser } from "react-icons/fa";
 import { useState } from "react";
 import { useEffect } from "react";
 import Modal from "./Modal";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthProvider";
 
 export default function Navbar() {
   const [isSticky, setIsSticky] = useState(false);
+
+  const { user } = useContext(AuthContext);
+
+  console.log(user);
 
   //handle scroll effect
   useEffect(() => {
