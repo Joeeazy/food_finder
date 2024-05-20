@@ -5,11 +5,14 @@ import { useEffect } from "react";
 import Modal from "./Modal";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
+import Profile from "./Profile";
 
 export default function Navbar() {
   const [isSticky, setIsSticky] = useState(false);
 
   const { user } = useContext(AuthContext);
+
+  console.log(user);
 
   console.log(user);
 
@@ -156,13 +159,16 @@ export default function Navbar() {
             </div>
           </div>
           {/* Login dialog */}
-          <button
-            className="button bg-green rounded-full px-8 py-3  text-white flex items-center gap-2"
-            onClick={() => document.getElementById("my_modal_5").showModal()}
-          >
-            <FaUser /> Login
-          </button>
-
+          {user ? (
+            <Profile user={user} />
+          ) : (
+            <button
+              className="button bg-green rounded-full px-8 py-3  text-white flex items-center gap-2"
+              onClick={() => document.getElementById("my_modal_5").showModal()}
+            >
+              <FaUser /> Login
+            </button>
+          )}
           <Modal />
         </div>
       </div>

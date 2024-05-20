@@ -38,7 +38,7 @@ export default function AuthProvider({ children }) {
   };
 
   //logout
-  const logout = () => {
+  const logOut = () => {
     return signOut(auth);
   };
 
@@ -74,8 +74,9 @@ export default function AuthProvider({ children }) {
     createUser,
     signUpWithGmail,
     login,
-    logout,
+    logOut,
     updateUserProfile,
+    loading,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
