@@ -8,7 +8,7 @@ export default function Profile({ user }) {
     logOut()
       .then(() => {
         // Sign-out successful.
-        // alert("LogOut successfull");
+        //alert("LogOut successfull");
       })
       .catch((error) => {
         // An error happened.

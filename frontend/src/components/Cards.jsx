@@ -1,10 +1,74 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import Swal from "sweetalert2";
 
 const Cards = ({ item }) => {
-  // console.log(item)
+  //destructure items from item prop
+  const { name, image, price, recipe, category, _id } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
+  const { user } = useContext(AuthContext);
+  //console.log(user);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // add to cart function
+  const handleAddtoCart = (item) => {
+    //check if user is logged in if there is user he can add to cart
+    if (user && user?.email) {
+      const cartItem = {
+        menuItemId: _id,
+        name,
+        quantity: 1,
+        image,
+        price,
+        email: user.email,
+        category,
+      };
+      //console.log(cartItem);
+      fetch("http://localhost:5000/carts", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(cartItem),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          //console.log(data);
+          if (data.insertedId) {
+            Swal.fire({
+              position: "center-end",
+              icon: "success",
+              title: "Food Added To Cart",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+    } else {
+      Swal.fire({
+        title: "Please Login or Create Account ",
+        text: "Please Login To add Products",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Signup Now",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/signup", { state: { from: location } });
+          // Swal.fire({
+          //   title: "Deleted!",
+          //   text: "Your file has been deleted.",
+          //   icon: "success",
+          // });
+        }
+      });
+    }
+  };
 
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -40,7 +104,12 @@ const Cards = ({ item }) => {
           <h5 className="font-semibold">
             <span className="text-sm text-red">Ksh </span> {item.price}
           </h5>
-          <button className="btn bg-green text-white">Add to Cart </button>
+          <button
+            className="btn bg-green text-white"
+            onClick={() => handleAddtoCart(item)}
+          >
+            Add to Cart{" "}
+          </button>
         </div>
       </div>
     </div>

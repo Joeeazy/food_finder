@@ -11,7 +11,7 @@ app.use(express.json());
 
 // mongodb config code
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@foodie-cluster.3iohndh.mongodb.net/?retryWrites=true&w=majority&appName=foodie-cluster`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -36,6 +36,37 @@ async function run() {
     // all menu items operations
     app.get("/menu", async (req, res) => {
       const result = await menuCollections.find().toArray();
+      res.send(result);
+    });
+
+    //cart post to db
+    app.post("/carts", async (req, res) => {
+      const cartItem = req.body;
+      const result = await cartCollections.insertOne(cartItem);
+      res.send(result);
+    });
+
+    // get carts using email
+    app.get("/carts", async (req, res) => {
+      const email = req.query.email;
+      const filter = { email: email };
+      const result = await cartCollections.find(filter).toArray();
+      res.send(result);
+    });
+
+    //get specific item
+    app.get("/carts/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await cartCollections.findOne(filter);
+      res.send(result);
+    });
+
+    //delete route items from cart
+    app.delete("/carts/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await cartCollections.deleteOne(filter);
       res.send(result);
     });
 

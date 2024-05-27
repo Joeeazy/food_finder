@@ -3,6 +3,7 @@ import Signup from "../components/Signup";
 import Main from "../layout/Main";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import Home from "../pages/home/Home.jsx";
+import CartPage from "../pages/shop/CartPage";
 import Menu from "../pages/shop/Menu";
 // import PrivateRouter from "../privateRouter/PrivateRouter";
 
@@ -17,11 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/menu",
-        element: (
-          // <PrivateRouter>
-          <Menu />
-          // </PrivateRouter>
-        ),
+        element: <Menu />,
+      },
+      {
+        path: "/cart-page",
+        element: <CartPage />,
       },
       {
         path: "/update-profile",
