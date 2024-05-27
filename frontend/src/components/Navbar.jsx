@@ -8,11 +8,9 @@ import { AuthContext } from "../contexts/AuthProvider";
 import Profile from "./Profile";
 
 export default function Navbar() {
-  const [isSticky, setIsSticky] = useState(false);
+  const [isSticky, setSticky] = useState(false);
 
   const { user } = useContext(AuthContext);
-
-  console.log(user);
 
   console.log(user);
 
@@ -21,14 +19,16 @@ export default function Navbar() {
     const handleScroll = () => {
       const offset = window.scrollY;
       if (offset > 0) {
-        setIsSticky(true);
+        setSticky(true);
       } else {
-        setIsSticky(false);
+        setSticky(false);
       }
     };
+
     window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.addEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   const navItems = (
@@ -163,8 +163,8 @@ export default function Navbar() {
             <Profile user={user} />
           ) : (
             <button
-              className="button bg-green rounded-full px-8 py-3  text-white flex items-center gap-2"
               onClick={() => document.getElementById("my_modal_5").showModal()}
+              className="btn flex items-center gap-2 rounded-full px-6 bg-green text-white"
             >
               <FaUser /> Login
             </button>
