@@ -2,9 +2,12 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 import UseCart from "../../hooks/UseCart";
 import Swal from "sweetalert2";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function CartPage() {
   const [cart, refetch] = UseCart();
+  const { user } = useContext(AuthContext);
 
   //handle delete button
   const handleDelete = (item) => {
@@ -101,6 +104,17 @@ export default function CartPage() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* cart sum totals */}
+      <div className="my-12">
+        <div className="md-w-1/2 space-y-3">
+          <h3 className="font-medium">Customer Details</h3>
+          {/* <p>Name: {"You"}</p>
+          <p>Email: {user.email || "You"}</p>
+          <p>User_Id: {user.uid || "You"}</p> */}
+        </div>
+        <div className="md-w-1/2 space-y-3"></div>
       </div>
     </div>
   );
