@@ -15,7 +15,7 @@ export default function Navbar() {
   const { user } = useContext(AuthContext);
 
   const [cart, refetch] = UseCart();
-  console.log(cart);
+  //console.log(cart);
 
   //handle scroll effect
   useEffect(() => {

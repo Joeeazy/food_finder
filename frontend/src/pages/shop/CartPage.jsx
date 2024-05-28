@@ -4,10 +4,69 @@ import UseCart from "../../hooks/UseCart";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { useState } from "react";
 
 export default function CartPage() {
   const [cart, refetch] = UseCart();
   const { user } = useContext(AuthContext);
+
+  const [cartItems, setcartItems] = useState([]);
+
+  const calculatePrice = (item) => {
+    return item.price * item.quantity;
+  };
+
+  //handle decrease price function
+  const handleDecrease = (item) => {
+    //console.log(item._id);
+    if (item.quantity > 1) {
+      fetch(`http://localhost:5000/carts/${item._id}`, {
+        method: "PUT", // Specify the request method
+        headers: { "Content-Type": "application/json" }, // Specify the content type
+        body: JSON.stringify({ quantity: item.quantity - 1 }), // Send the data in JSON format
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const updatedCart = cartItems.map((cartItem) => {
+            if (cartItem.id == item.id) {
+              return {
+                ...cartItem,
+                quantity: cartItem.quantity - 1,
+              };
+            }
+            return cartItem;
+          });
+          setcartItems(updatedCart);
+        });
+      refetch();
+    } else {
+      alert("Item Cannot be 0");
+    }
+  };
+
+  //handle Increase Price
+  const handleIncrease = (item) => {
+    //console.log(item._id);
+    fetch(`http://localhost:5000/carts/${item._id}`, {
+      method: "PUT", // Specify the request method
+      headers: { "Content-Type": "application/json" }, // Specify the content type
+      body: JSON.stringify({ quantity: item.quantity + 1 }), // Send the data in JSON format
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedCart = cartItems.map((cartItem) => {
+          if (cartItem.id == item.id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            };
+          }
+          return cartItem;
+        });
+        setcartItems(updatedCart);
+      });
+    refetch();
+  };
 
   //handle delete button
   const handleDelete = (item) => {
@@ -38,6 +97,13 @@ export default function CartPage() {
       }
     });
   };
+
+  //calculate total price
+  const cartSubTotal = cart.reduce((total, item) => {
+    return total + calculatePrice(item);
+  }, 0);
+
+  const orderTotal = cartSubTotal;
   return (
     <div className="section-container">
       {/* banner */}
@@ -88,14 +154,34 @@ export default function CartPage() {
                       {item.category}
                     </span>
                   </td>
-                  <td className="text-black text-xl">{item.quantity}</td>
-                  <td className="text-black text-xl">{item.price}</td>
+                  <td className="text-black text-xl">
+                    <button
+                      className="btn btn-xs bg-transparent border-none font-bold text-black hover:bg-green hover:text-white"
+                      onClick={() => handleDecrease(item)}
+                    >
+                      -
+                    </button>
+                    <input
+                      className="bg-transparent w-10 mx-2 text-center overflow-hidden appearance-none md:mt-3 "
+                      type="number"
+                      value={item.quantity}
+                      onChange={() => console.log(item.quantity)}
+                    />
+                    <button
+                      className="btn btn-xs bg-transparent border-none font-bold text-black hover:bg-green hover:text-white"
+                      onClick={() => handleIncrease(item)}
+                    >
+                      +
+                    </button>
+                  </td>
+                  <td className="text-black text-xl">
+                    {calculatePrice(item).toFixed(2)}
+                  </td>
                   <th>
                     <button
                       className="btn btn-ghost text-red text-xl btn-xs"
                       onClick={() => handleDelete(item)}
                     >
-                      Delete
                       <FaTrash />
                     </button>
                   </th>
@@ -107,14 +193,21 @@ export default function CartPage() {
       </div>
 
       {/* cart sum totals */}
-      <div className="my-12">
-        <div className="md-w-1/2 space-y-3">
-          <h3 className="font-medium">Customer Details</h3>
-          {/* <p>Name: {"You"}</p>
-          <p>Email: {user.email || "You"}</p>
-          <p>User_Id: {user.uid || "You"}</p> */}
+      <div className="my-14 flex flex-col md:flex-row items-start justify-around text-black text-xl">
+        <div className="md-w-1/2 space-y-3 ">
+          <h3 className="font-bold">Customer Details</h3>
+          {/* <p>Name: {user.displayName}</p> */}
+          {/* <p>Email: {user.email}</p> */}
+          {/* <p>User_Id: {user.uid || "You"}</p> */}
         </div>
-        <div className="md-w-1/2 space-y-3"></div>
+        <div className="md-w-1/2 space-y-3 mr-20 md:pt-5">
+          <h3 className="font-bold">Shopping details</h3>
+          <p>Total Items: {cart.length}</p>
+          <p>Total Price: ${orderTotal.toFixed(2)}</p>
+          <button className="btn bg-green text-white border-transparent text-xl">
+            Proceed To CheckOut
+          </button>
+        </div>
       </div>
     </div>
   );
