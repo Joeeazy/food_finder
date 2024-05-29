@@ -23,6 +23,10 @@ mongoose
 const menuRoutes = require("./api/routes/menuRoutes");
 app.use("/menu", menuRoutes);
 
+//cart routes
+const cartRoutes = require("./api/routes/cartRoutes");
+app.use("/carts", cartRoutes);
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
