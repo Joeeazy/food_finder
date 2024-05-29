@@ -173,8 +173,8 @@ export default function Menu() {
 
         {/* products card */}
         <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1  gap-4">
-          {currentItems.map((item) => (
-            <Cards key={item._id} item={item} />
+          {currentItems.map((item, index) => (
+            <Cards key={index} item={item} />
           ))}
         </div>
       </div>

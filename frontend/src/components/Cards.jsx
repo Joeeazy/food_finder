@@ -3,21 +3,24 @@ import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
+import useCart from "../hooks/useCart";
+import axios from "axios";
 
 const Cards = ({ item }) => {
   //destructure items from item prop
   const { name, image, price, recipe, category, _id } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const { user } = useContext(AuthContext);
+  const [cart, refetch] = useCart();
   //console.log(user);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // add to cart function
-  const handleAddtoCart = (item) => {
-    //check if user is logged in if there is user he can add to cart
-    if (user && user?.email) {
+  // add to cart handler
+  const handleAddToCart = (item) => {
+    // console.log(item);
+    if (user && user.email) {
       const cartItem = {
         menuItemId: _id,
         name,
@@ -25,50 +28,105 @@ const Cards = ({ item }) => {
         image,
         price,
         email: user.email,
-        category,
       };
-      //console.log(cartItem);
-      fetch("http://localhost:5000/carts", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(cartItem),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          //console.log(data);
-          if (data.insertedId) {
+
+      axios
+        .post("http://localhost:5000/carts", cartItem)
+        .then((response) => {
+          console.log(response);
+          if (response && response.status === 200) {
+            refetch(); // refetch cart
             Swal.fire({
-              position: "center-end",
+              position: "center",
               icon: "success",
-              title: "Food Added To Cart",
+              title: "Food added on the cart.",
               showConfirmButton: false,
               timer: 1500,
             });
           }
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          const errorMessage = error.response.data.message;
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: `${errorMessage}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
     } else {
       Swal.fire({
-        title: "Please Login or Create Account ",
-        text: "Please Login To add Products",
+        title: "Please login to order the food",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Signup Now",
+        confirmButtonText: "Login now!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/signup", { state: { from: location } });
-          // Swal.fire({
-          //   title: "Deleted!",
-          //   text: "Your file has been deleted.",
-          //   icon: "success",
-          // });
+          navigate("/login", { state: { from: location } });
         }
       });
     }
   };
+
+  // // add to cart function
+  // const handleAddtoCart = (item) => {
+  //   //check if user is logged in if there is user he can add to cart
+  //   if (user && user.email) {
+  //     const cartItem = {
+  //       menuItemId: _id,
+  //       name,
+  //       quantity: 1,
+  //       image,
+  //       price,
+  //       email: user.email,
+  //       category,
+  //     };
+  //     //console.log(cartItem);
+  //     fetch("http://localhost:5000/carts", {
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //       body: JSON.stringify(cartItem),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         //console.log(data);
+  //         if (data.insertedId) {
+  //           Swal.fire({
+  //             position: "center",
+  //             icon: "success",
+  //             title: "Food Added To Cart",
+  //             showConfirmButton: false,
+  //             timer: 1500,
+  //           });
+  //         }
+  //       });
+  //   } else {
+  //     Swal.fire({
+  //       title: "Please Login or Create Account ",
+  //       text: "Please Login To add Products",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Signup Now",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         navigate("/signup", { state: { from: location } });
+  //         // Swal.fire({
+  //         //   title: "Deleted!",
+  //         //   text: "Your file has been deleted.",
+  //         //   icon: "success",
+  //         // });
+  //       }
+  //     });
+  //   }
+  // };
 
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -106,7 +164,7 @@ const Cards = ({ item }) => {
           </h5>
           <button
             className="btn bg-green text-white"
-            onClick={() => handleAddtoCart(item)}
+            onClick={() => handleAddToCart(item)}
           >
             Add to Cart{" "}
           </button>
