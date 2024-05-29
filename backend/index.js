@@ -12,10 +12,16 @@ app.use(express.json());
 // connect with mongoose
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@foodie-cluster.3iohndh.mongodb.net/?retryWrites=true&w=majority&appName=foodie-cluster`
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@foodie-cluster.3iohndh.mongodb.net/demo-foodi-client?retryWrites=true&w=majority&appName=foodie-cluster`
   )
   .then(console.log("MongoDB connected successfully"))
   .catch((error) => console.log("Error connecting to MongoDB", error));
+
+// import routes
+
+//menu routes
+const menuRoutes = require("./api/routes/menuRoutes");
+app.use("/menu", menuRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
