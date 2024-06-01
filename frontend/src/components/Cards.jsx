@@ -3,7 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
-import useCart from "../hooks/useCart";
+import UseCart from "../hooks/UseCart";
 import axios from "axios";
 
 const Cards = ({ item }) => {
@@ -11,7 +11,7 @@ const Cards = ({ item }) => {
   const { name, image, price, recipe, category, _id } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const { user } = useContext(AuthContext);
-  const [cart, refetch] = useCart();
+  const [cart, refetch] = UseCart();
   //console.log(user);
 
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 
-const useCart = () => {
+export default function useCart() {
   const { user } = useContext(AuthContext);
   // console.log(user.email)
   const token = localStorage.getItem("access-token");
@@ -23,5 +23,4 @@ const useCart = () => {
   });
 
   return [cart, refetch];
-};
-export default useCart;
+}
